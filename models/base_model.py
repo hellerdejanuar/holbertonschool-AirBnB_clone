@@ -24,7 +24,7 @@ class BaseModel():
 
     def to_dict(self):
         """ Returns a key/value dictionary """
-        return {'id': self.id,
-                'created_at': self.created_at.isoformat('T', 'auto'),
-                'updated_at': self.updated_at.isoformat('T', 'auto'),
-                '__class__': self.__class__.__name__}
+        return_dict = self.__dict__
+        return_dict['created_at'] = self.created_at.isoformat()
+        return_dict['updated_at'] = self.updated_at.isoformat()
+        return return_dict
