@@ -27,4 +27,5 @@ class BaseModel():
         return_dict = self.__dict__
         return_dict['created_at'] = self.created_at.isoformat()
         return_dict['updated_at'] = self.updated_at.isoformat()
+        return_dict.update({'__class__' : self.__class__.__name__})
         return return_dict
