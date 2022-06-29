@@ -3,6 +3,7 @@
 import json
 from datetime import datetime
 import uuid
+from modules import storage
 
 
 class BaseModel():
@@ -27,7 +28,9 @@ class BaseModel():
 
     def save(self):
         """ Save changes and update updated_at """
+        # NEW THINGS NOT TESTED
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """ Returns a key/value dictionary """
@@ -36,3 +39,5 @@ class BaseModel():
         return_dict['updated_at'] = self.updated_at.isoformat()
         return_dict.update({'__class__' : self.__class__.__name__})
         return return_dict
+
+
