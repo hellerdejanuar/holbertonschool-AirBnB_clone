@@ -17,13 +17,13 @@ class FileStorage():
     	return self.__objects
 
     def new(self, obj):
-    	""" Sets in __objects the obj with key <obj class name>.id"""
-    	return __object.update({f'{obj.__class__.__name__}.{obj.id}': obj})
+        """ Sets in __objects the obj with key <obj class name>.id"""
+        self.__objects.update({f'{obj.__class__.__name__}.{obj.id}': obj})
 
     def save(self):
         """ Serializes __objects to the JSON file """
         with open(self.__file_path, 'w') as f:
-            f.write(json.dumps(__objects))
+            f.write(json.dumps(self.__objects, default = str))
 
     def reload(self):
         """ Deserializes the JSON file to __objects """

@@ -29,7 +29,7 @@ class BaseModel():
 
     def save(self):
         """ Save changes and update updated_at """
-        models.storage.save()
+        storage.save()
         self.updated_at = datetime.now()
         self.created_at = datetime.now()
 
