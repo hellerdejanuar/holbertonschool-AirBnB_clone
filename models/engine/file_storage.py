@@ -34,6 +34,6 @@ class FileStorage():
             with open(self.__file_path, 'r') as f:
             #    __objects_copy = json.loads(f.read())
             # return [__objects.update(**dic) for dic in __objects]
-                [FileStorage.__objects.update(json.loads(dic)) for dic in f]
+                {self.__objects.update(json.loads(dic)) for dic in f}
         except FileNotFoundError:
             return
