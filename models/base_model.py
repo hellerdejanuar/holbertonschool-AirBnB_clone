@@ -25,7 +25,9 @@ class BaseModel():
 
     def __str__(self):
         """ Print string method """
-        return (f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+        dic = {k: self.__dict__[k] for k in self.__dict__ if k != '__class__'}
+        # removes __class__ attribute from auxiliary dic
+        return (f"[{self.__class__.__name__}] ({self.id}) {dic}")
 
     def save(self):
         """ Save changes and update updated_at """
@@ -36,8 +38,8 @@ class BaseModel():
     def to_dict(self):
         """ Returns a key/value dictionary """
         return_dict = self.__dict__
-        return_dict['created_at'] = self.created_at.isoformat()
-        return_dict['updated_at'] = self.updated_at.isoformat()
+        return_dict["created_at"] = self.created_at.isoformat()
+        return_dict["updated_at"] = self.updated_at.isoformat()
         return_dict.update({'__class__' : self.__class__.__name__})
         return return_dict
 
