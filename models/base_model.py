@@ -3,7 +3,7 @@
 import json
 from datetime import datetime
 import uuid
-from modules import storage
+from models import storage
 
 
 class BaseModel():
@@ -18,9 +18,10 @@ class BaseModel():
                     else:
                         setattr(self, key, kwargs[key])
         else:
-        	self.id = str(uuid.uuid4())
-        	self.created_at = datetime.now()
-        	self.updated_at = datetime.now()
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """ Print string method """
@@ -28,9 +29,9 @@ class BaseModel():
 
     def save(self):
         """ Save changes and update updated_at """
-        # NEW THINGS NOT TESTED
+        models.storage.save()
         self.updated_at = datetime.now()
-        storage.save()
+        self.created_at = datetime.now()
 
     def to_dict(self):
         """ Returns a key/value dictionary """
