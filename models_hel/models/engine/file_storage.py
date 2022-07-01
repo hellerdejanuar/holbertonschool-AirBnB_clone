@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Engine Module """
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage():
@@ -39,8 +40,7 @@ class FileStorage():
     @staticmethod
     def classes():
         """ Returns a dict of classes """
-        from models.base_model import BaseModel
-        list_classes = {
+        classes_dict = {
             "BaseModel": BaseModel,
         }
-        return list_classes
+        return classes_dict
