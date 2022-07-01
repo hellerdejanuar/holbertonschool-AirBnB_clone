@@ -10,7 +10,8 @@ class BaseModel():
     """ Base Class """
 
     def __init__(self, *args, **kwargs):
-        if kwargs:
+        """ Initializator of Base Model """
+        if kwargs is not None and len(kwargs) != 0:
             for key in kwargs:
                 if key != '__class__':
                     if (key == 'created_at' or  key == 'updated_at'):
@@ -20,7 +21,7 @@ class BaseModel():
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.updated_at = self.created_at
             storage.new(self)
 
     def __str__(self):
@@ -37,10 +38,9 @@ class BaseModel():
 
     def to_dict(self):
         """ Returns a key/value dictionary """
-        return_dict = self.__dict__
-        return_dict["created_at"] = self.created_at.isoformat()
-        return_dict["updated_at"] = self.updated_at.isoformat()
-        return_dict.update({'__class__' : self.__class__.__name__})
-        return return_dict
-
-
+        #return_dict = self.__dict__
+        self.__dict__["created_at"] = self.created_at.isoformat()
+        self.__dict__["updated_at"] = self.updated_at.isoformat()
+        self.__dict__["__class__"] = self.__class__.__name__
+        #return_dict.update({'__class__' : self.__class__.__name__})
+        return self.__dict__
