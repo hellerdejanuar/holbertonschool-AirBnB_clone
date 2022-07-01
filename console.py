@@ -13,13 +13,19 @@ class HBNBCommand(cmd.Cmd):
         """ Quit command to exit the program """
         return True
 
+
+
     def do_EOF(self, args):
         """ End of file reached, exit """
         return True
 
+
+
     def emptyline(self):
         """ Empty """
         pass
+
+
 
     def do_show(self, args):
         """ Prints the string representation of an instance
@@ -39,6 +45,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+
+
     def do_create(self, args):
         """ Creates a new instance of BaseModel """
         if args:
@@ -51,6 +59,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
         else:
             print("** class name missing **")
+
+
 
     def do_destroy(self, args):
         """ Deletes an instance based on the class name and id """
@@ -70,9 +80,48 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+
+
     def do_update(self, args):
         """  Updates an instance based on the class name and id
         by adding or updating attribute """
+        if args:
+            argv = args.split()
+
+            if argv[0] not in storage.classes():
+                print("** class doesn't exist **")
+            elif len(argv) == 1:
+                print("** instance id missing **")
+            elif len(argv) == 2:
+                print("** attribute name missing **")
+            elif len(argv) == 3:
+                print("** value missing **")
+            else:
+                obj_key = argv[0] + '.' + argv[1]
+
+                if obj_key in storage.all().keys():
+                    obj = storage.all()[obj_key]
+                    attr_type = type(getattr(obj, argv[2]))
+
+                    if attr_type == int:
+                        setattr(obj, argv[2], int(argv[3]))
+                    elif attr_type == float:
+                        setattr(obj, argv[2], float(argv[3]))
+                    elif attr_type == list:
+                        setattr(obj, argv[2], json.loads(argv[3]))
+                        # convert string repr of list "[1, 2, 3]" into list obj
+                        # TEST pending ////
+                    elif attr_type == str:
+                        setattr(obj, argv[2], argv[3])
+                    else:
+                        print("unknown type")
+                    storage.save()
+                else:
+                    print("** no instance found **")
+        else:
+            print("** class name missing **")
+
+
 
     def do_all(self, args):
         """ Prints all string representation of all instances
