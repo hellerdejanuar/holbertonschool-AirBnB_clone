@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
 import cmd
+from models import storage
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
@@ -17,17 +19,39 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_show(self, args):
+
         """ Prints the string representation of an instance 
         based on the class name and id """
+        
 
     def do_create(self, args):
-        """ """
+        """ Creates a new instance of BaseModel """
+
+        if args:
+            if args in storage.classes():
+                inst = storage.classes()[args]()
+                inst.save()
+                print(inst.id)
+
+            elif args not in storage.classes():
+                print("** class doesn't exist **")
+        else:
+            print("** class name missing **")
 
     def do_destroy(self, args):
-        """ """
+        """ Deletes an instance based on the class name and id """
     
     def do_update(self, args):
-        """ """
+        """  Updates an instance based on the class name and id 
+        by adding or updating attribute """
+
+    def do_all(self, args):
+        """ Prints all string representation of all instances 
+        based or not on the class name """
+        obj_list = []
+        for obj in storage.all():
+            print (obj.__str__())
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
