@@ -2,6 +2,7 @@
 """ Engine Module """
 import json
 
+
 class FileStorage():
     """ Class FileStorage """
 
@@ -18,12 +19,12 @@ class FileStorage():
     def new(self, obj):
         """ Sets in __objects the obj with key <obj class name>.id"""
         self.__objects.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
-        # self.__objects.update({f"{obj.__class__.__name__}.{obj.id}" : obj.to_dict()})
+# self.__objects.update({f"{obj.__class__.__name__}.{obj.id}" : obj.to_dict()})
 
     def save(self):
         """ Serializes __objects to the JSON file """
         from models.base_model import BaseModel
-    # temp = {key: value.to_dict() for key, value in self.__objects.items()}
+# temp = {key: value.to_dict() for key, value in self.__objects.items()}
         temp = self.__objects.copy()
         for key, value in temp.items():
             temp[key] = value.to_dict()
@@ -33,29 +34,15 @@ class FileStorage():
     def reload(self):
         """ Deserializes the JSON file to __objects """
         from models.base_model import BaseModel
-        from models.user import User
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.place import Place
-        from models.review import Review
-        
-        classes = {
-            'BaseModel': BaseModel,
-            'User': User,
-            'State': State,
-            'City': City,
-            'Amenity': Amenity,
-            'Place': Place,
-            'Review': Review
-        }
 
         try:
             with open(self.__file_path, 'r') as f:
                 self.__objects = json.loads(f.read())
                 for key, value in self.__objects.items():
-                    self.__objects[key] = classes[value['__class__']](**value)
-    # self.__objects = {k: classes[v['__class__']](**v) for k, v in self.__objects.items()}
+                    self.__objects[key] = FileStorage.classes()[value[
+                                            '__class__']](**value)
+# self.__objects = {k: classes[v['__class__']](**v)
+# for k, v in self.__objects.items()}
         except FileNotFoundError:
             pass
         #    with open(self.__file_path, 'r') as f:
@@ -65,8 +52,20 @@ class FileStorage():
     def classes():
         """ Returns a dict of classes """
         from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
 
         classes_dict = {
-            "BaseModel": BaseModel,
+            'BaseModel': BaseModel,
+            'User': User,
+            'State': State,
+            'City': City,
+            'Amenity': Amenity,
+            'Place': Place,
+            'Review': Review
         }
         return classes_dict

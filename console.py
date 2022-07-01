@@ -27,7 +27,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Creates a new instance of BaseModel """
-
         if args:
             if args in storage.classes():
                 inst = storage.classes()[args]()
