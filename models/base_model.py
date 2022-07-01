@@ -14,7 +14,7 @@ class BaseModel():
         if kwargs is not None and len(kwargs) != 0:
             for key in kwargs:
                 if key != '__class__':
-                    if (key == 'created_at' or  key == 'updated_at'):
+                    if (key == 'created_at' or key == 'updated_at'):
                         setattr(self, key, datetime.fromisoformat(kwargs[key]))
                     else:
                         setattr(self, key, kwargs[key])
@@ -42,5 +42,5 @@ class BaseModel():
         new_dict["created_at"] = self.created_at.isoformat()
         new_dict["updated_at"] = self.updated_at.isoformat()
         new_dict["__class__"] = self.__class__.__name__
-        #new_dict.update({'__class__' : self.__class__.__name__})
+        # new_dict.update({'__class__' : self.__class__.__name__})
         return new_dict
