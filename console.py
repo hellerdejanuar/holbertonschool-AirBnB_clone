@@ -64,8 +64,10 @@ class HBNBCommand(cmd.Cmd):
         """ Prints all string representation of all instances
         based or not on the class name """
         obj_list = []
+
         for obj in storage.all():
-            print(obj.__str__())
+            obj_list.append(str(storage.all()[obj]))
+        print(obj_list)
 
 
 if __name__ == '__main__':
