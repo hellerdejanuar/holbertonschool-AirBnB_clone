@@ -53,3 +53,17 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place_str, str(my_place))
 
     def test_save(self):
+        """test save method for class Place"""
+        my_place = Place()
+        my_place.save()
+        self.assertNotEqual(my_place.created_at, my_place.updated_at)
+
+    def test_to_dict(self):
+        """test to_dict method for class Place"""
+        my_place = Place()
+        my_dict = my_place.to_dict()
+        self.assertEqual(type(my_dict), dict)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -29,7 +29,7 @@ class TestState(unittest.TestCase):
     def test_str(self):
         """testing str method"""
         my_state = State()
-        state_str = f'[{State.__name__}] ({my_state.id}) <{my_state.__dict__}>'
+        state_str = f'[{State.__name__}] ({my_state.id}) {my_state.__dict__}'
         self.assertEqual(state_str, str(my_state))
 
     def test_save(self):

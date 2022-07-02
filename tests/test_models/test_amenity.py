@@ -94,7 +94,7 @@ class TestAirbnb(unittest.TestCase):
         """ test the string representation of the object """
         obj_am_3 = Amenity()
         str_obj_3 = str(obj_am_3)
-        str_compare = '[{}] ({}) <{}>'.format(
+        str_compare = '[{}] ({}) {}'.format(
                 type(obj_am_3).__name__, obj_am_3.id, obj_am_3.__dict__)
 
         self.assertEqual(str_obj_3, str_compare)
