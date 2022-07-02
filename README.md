@@ -22,12 +22,9 @@ The objective of this project is writing our own AirB&B console using a command 
 
 #### Serialization-Deserialization
 
-Writing the dictionary representation to a file:
-- It’s not human readable.
-- Python doesn’t know how to convert a string to a dictionary (easily).
-- Using this file with another program in Python or other language will be hard.
+Writing the dictionary representation directly to a file would not be human readable, and python doesn’t know how to convert a string to a dictionary (easily).
 
-So we will have to:
+So to serialize we will have to:
 - Convert an instance to Python built in serializable data structure (list, dict, number and string) to retrieve a dictionary.
 - Convert this dictonary representation to a JSON string. For us it will be `my_string = JSON.dumps(my_dict)`.
 - Write this string to a file on disk.
@@ -37,6 +34,7 @@ And for deserialization, the same but the other way:
 - Convert this JSON string to a data structure. Because it's a JSON representation, it’s easy to convert. For us it will be `my_dict = JSON.loads(my_string)`.
 - Convert this data structure to instance. For us it will be `my_instance = MyObject(my_dict)`.
 
+
 ##### Flow:
 
 		<class 'BaseModel'> -> to_dict() -> <class 'dict'> -> JSON dump -> <class 'str'>
@@ -44,30 +42,38 @@ And for deserialization, the same but the other way:
 
 
 ## Command Interpreter
-serialization-deserialization
+prompt($): (hbnb)
 
 ### How to use it
-- Type ./console.py to launch the command interpreter.
-- create - Creates a new instance of the class.\
-	Usage:
-	- create class_name -  Ex: $ create BaseModel
-- show - Prints an instance based on the class name and id.\
-	Usage:
-	- show class_name id - Ex: $ show BaseModel 1234
-	- class_name.show(id) - Ex: $ BaseModel.show("1234")
-- destroy - Deletes an instance based on the class name and id.\
-	Usage:
-	- destroy class_name id -  Ex: $ destroy BaseModel 1234
-	- class_name.destroy(id) - Ex: $ BaseModel.destroy("1234")
-- all - Prints all instances based or not on the class name.\
-	Usage:
-	- all class_name - Ex: $ all BaseModel
-	- all - Ex: $ all
-	- class_name.all() - Ex: $ BaseModel.all()
-- update: Updates an instance based on the class name and id by adding or updating attribute.\
-	Usage:
-	- update class_name id attribute_name "attribute_value" - Ex: $ update BaseModel 1234 email "aibnb@mail.com"
-	- class_name.update(id, attribute_name, attribute_value) - Ex: $ BaseModel.update("1234", "año de construida", 2010)
-- count: Retrieve the number of instances of a class.\
-	Usage:
-	- class_name.count() - Ex: $ BaseModel.count()
+- Type `./console.py` to launch the command interpreter.
+- **create** - Creates a new instance of the class.\
+	Usage: `create class_name`
+
+		(hbnb) create BaseModel
+			
+- **show** - Prints an instance based on the class name and id.\
+	Usage: `show class_name id`
+
+		(hbnb) show BaseModel 1234
+
+- **destroy** - Deletes an instance based on the class name and id.\
+	Usage: `destroy class_name id`
+		
+		(hbnb) destroy BaseModel 1234
+
+- **all** - Prints all instances based or not on the class name.\
+	Usage: `all class_name` | `all`
+	
+		(hbnb) all BaseModel
+		(hbnb) all
+
+- **update** - Updates an instance based on the class name and id by adding or updating attribute.\
+	Usage: `update class_name id attribute_name "attribute_value"`
+	
+		(hbnb) update BaseModel 1234 email "aibnb@mail.com"
+
+## Known Bugs
+- update unknown attribute name crashes
+- update place.amenity_id saves the id as string but must be provided as
+- all console functions ignore extra arguments if the method does not need it
+- NOT WORKING: save amenity_id
