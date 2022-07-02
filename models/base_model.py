@@ -32,8 +32,8 @@ class BaseModel():
 
     def save(self):
         """ Save changes and update updated_at """
-        storage.save()
         self.updated_at = datetime.now()
+        storage.save()
         #self.created_at = datetime.now() # is this really needed??
 
     def to_dict(self):
