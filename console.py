@@ -7,7 +7,7 @@ from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """ Class Cmd """
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
 
     def do_quit(self, args):
         """ Quit command to exit the program """
@@ -128,8 +128,16 @@ class HBNBCommand(cmd.Cmd):
         based or not on the class name """
         obj_list = []
 
-        for obj in storage.all():
-            obj_list.append(str(storage.all()[obj]))
+        if not args:
+            for obj_key in storage.all():
+                obj_list.append(str(storage.all()[obj_key]))
+        else:
+            argv = args.split()
+            if argv[0] in storage.classes():
+                for obj_key in storage.all():
+                    if storage.all()[obj_key].__class__.__name__ == argv[0]:
+                        obj_list.append(str(storage.all()[obj_key]))
+
         print(obj_list)
 
 
