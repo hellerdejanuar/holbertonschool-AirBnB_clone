@@ -131,14 +131,16 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             for obj_key in storage.all():
                 obj_list.append(str(storage.all()[obj_key]))
+            print(obj_list)
         else:
             argv = args.split()
             if argv[0] in storage.classes():
                 for obj_key in storage.all():
                     if storage.all()[obj_key].__class__.__name__ == argv[0]:
                         obj_list.append(str(storage.all()[obj_key]))
-
-        print(obj_list)
+                print(obj_list)
+            else:
+                print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
