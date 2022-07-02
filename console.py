@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ Console """
 import cmd
+import json
 from models import storage
 from models.base_model import BaseModel
-
+import shlex
 
 class HBNBCommand(cmd.Cmd):
     """ Class Cmd """
@@ -31,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
         """ Prints the string representation of an instance
         based on the class name and id """
         if args:
-            argv = args.split()
+            argv = shlex.split(args)
             if argv[0] not in storage.classes():
                 print("** class doesn't exist **")
             elif len(argv) == 1:
@@ -65,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, args):
         """ Deletes an instance based on the class name and id """
         if args:
-            argv = args.split()
+            argv = shlex.split(args)
             if argv[0] not in storage.classes():
                 print("** class doesn't exist **")
             elif len(argv) == 1:
@@ -86,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
         """  Updates an instance based on the class name and id
         by adding or updating attribute """
         if args:
-            argv = args.split()
+            argv = shlex.split(args)
 
             if argv[0] not in storage.classes():
                 print("** class doesn't exist **")
@@ -108,6 +109,7 @@ class HBNBCommand(cmd.Cmd):
                     elif attr_type == float:
                         setattr(obj, argv[2], float(argv[3]))
                     elif attr_type == list:
+                        print(argv[3])
                         setattr(obj, argv[2], json.loads(argv[3]))
                         # convert string repr of list "[1, 2, 3]" into list obj
                         # TEST pending ////
@@ -133,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
                 obj_list.append(str(storage.all()[obj_key]))
             print(obj_list)
         else:
-            argv = args.split()
+            argv = shlex.split(args)
             if argv[0] in storage.classes():
                 for obj_key in storage.all():
                     if storage.all()[obj_key].__class__.__name__ == argv[0]:
