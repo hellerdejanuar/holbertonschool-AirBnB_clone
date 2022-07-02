@@ -18,7 +18,7 @@ class TestBaseModel(unittest.TestCase):
     def test_str(self):
         """testing str method"""
         model = BaseModel()
-        model_str = '[{}] ({}) <{}>'.format(
+        model_str = '[{}] ({}) {}'.format(
                 BaseModel.__name__, model.id, model.__dict__)
         self.assertEqual(model_str, str(model))
 
