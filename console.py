@@ -88,37 +88,41 @@ class HBNBCommand(cmd.Cmd):
         by adding or updating attribute """
         if args:
             argv = shlex.split(args)
+            if len(argv) >= 2:
+                obj_key = argv[0] + '.' + argv[1]
 
             if argv[0] not in storage.classes():
                 print("** class doesn't exist **")
             elif len(argv) == 1:
                 print("** instance id missing **")
+            elif obj_key not in storage.all().keys():
+                print("** no instance found **")
             elif len(argv) == 2:
                 print("** attribute name missing **")
             elif len(argv) == 3:
                 print("** value missing **")
             else:
-                obj_key = argv[0] + '.' + argv[1]
+                # Handling of args as data
+                obj = storage.all()[obj_key]
+                attr_type = type(getattr(obj, argv[2]))
 
-                if obj_key in storage.all().keys():
-                    obj = storage.all()[obj_key]
-                    attr_type = type(getattr(obj, argv[2]))
-
-                    if attr_type == int:
-                        setattr(obj, argv[2], int(argv[3]))
-                    elif attr_type == float:
-                        setattr(obj, argv[2], float(argv[3]))
-                    elif attr_type == list:
-                        str_list = argv[3].strip('][').split(', ')
-                        setattr(obj, argv[2], str_list)
-                        # convert string repr of list "[1, 2, 3]" into list obj
-                    elif attr_type == str:
-                        setattr(obj, argv[2], argv[3])
-                    else:
-                        print("unknown type")
-                    storage.save()
+                # Handles args as integers
+                if attr_type == int:
+                    setattr(obj, argv[2], int(argv[3]))
+                # Floats
+                elif attr_type == float:
+                    setattr(obj, argv[2], float(argv[3]))
+                # List of strings
+                elif attr_type == list:
+                    str_list = argv[3].strip('][').split(', ')
+                    setattr(obj, argv[2], str_list)
+                    # convert string repr of list "[1, 2, 3]" into list obj
+                # Strings
+                elif attr_type == str:
+                    setattr(obj, argv[2], argv[3])
                 else:
-                    print("** no instance found **")
+                    print("unknown type")
+                storage.save()
         else:
             print("** class name missing **")
 
