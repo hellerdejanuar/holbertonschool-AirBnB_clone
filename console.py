@@ -109,7 +109,10 @@ class HBNBCommand(cmd.Cmd):
                     elif attr_type == float:
                         setattr(obj, argv[2], float(argv[3]))
                     elif attr_type == list:
-                        str_list = [str(i) for i in json.loads(argv[3])]
+                        print(argv[3])
+                        str_list = argv[3].strip('][').split(', ')
+                        #str_list = [str(i) for i in json.loads(argv[3])]
+                        print(str_list)
                         setattr(obj, argv[2], str_list)
                         # convert string repr of list "[1, 2, 3]" into list obj
                         # TEST pending ////
