@@ -1,28 +1,44 @@
 #!/usr/bin/python3
-""" Engine Module """
+"""
+Engine Module
+"""
 import json
 
 
 class FileStorage():
-    """ Class FileStorage """
+    """
+    Class FileStorage: serializes instances to a JSON file
+                    and deserializes JSON file to instances
+    Private Attributes:
+        __file_path: string - path to the JSON file (ex: file.json)
+        __objects: dictionary - will store all objects by <class name>.id
+    Public instance methods:
+        all(self): returns the dictionary __objects
+        new(self, obj): sets in __objects the obj with key <obj class name>.id
+        save(self): serializes __objects to the JSON file (path: __file_path)
+        reload(self): deserializes the JSON file to __objects
+    """
 
     __file_path = "file.json"  # path to the JSON file (ex: file.json)
     __objects = {}  # dict empty but will store all objects by <class name>.id
 
-    def __init__(self):
-        """ Initializator of FileStorage Instance """
-
     def all(self):
-        """ Returns the dictionary __objects """
+        """
+        Returns the dictionary __objects
+        """
         return self.__objects
 
     def new(self, obj):
-        """ Sets in __objects the obj with key <obj class name>.id"""
+        """
+        Sets in __objects the obj with key <obj class name>.id
+        """
         self.__objects.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 # self.__objects.update({f"{obj.__class__.__name__}.{obj.id}" : obj.to_dict()})
 
     def save(self):
-        """ Serializes __objects to the JSON file """
+        """
+        Serializes __objects to the JSON file
+        """
         from models.base_model import BaseModel
 # temp = {key: value.to_dict() for key, value in self.__objects.items()}
         temp = self.__objects.copy()
@@ -32,7 +48,9 @@ class FileStorage():
             json.dump(temp, f)
 
     def reload(self):
-        """ Deserializes the JSON file to __objects """
+        """
+        Deserializes the JSON file to __objects
+        """
         from models.base_model import BaseModel
 
         try:
@@ -50,7 +68,9 @@ class FileStorage():
 
     @staticmethod
     def classes():
-        """ Returns a dict of classes """
+        """
+        Returns a dict of classes
+        """
         from models.base_model import BaseModel
         from models.user import User
         from models.state import State
