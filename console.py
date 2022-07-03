@@ -6,13 +6,18 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 import shlex  # split based on lexical expressions
+import sys
 
 
 class HBNBCommand(cmd.Cmd):
     """
     Class Cmd, the imported implements quit/EOF, help, and a custom prompt
     """
-    prompt = '(hbnb) '
+    # prompt = '(hbnb) '
+    if sys.stdin and sys.stdin.isatty():
+        prompt = '(hbnb) '
+    else:
+        prompt = '(hbnb)\n'
 
     def do_quit(self, args):
         """ Quit command to exit the program """
