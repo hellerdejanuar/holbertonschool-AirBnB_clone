@@ -1,8 +1,12 @@
 #!/usr/bin/python3
-""" Amenity Base Module """
+"""
+Amenity Base Module
+"""
 from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    """ Class Amenity """
+    """
+    Class Amenity
+    """
     name = ""

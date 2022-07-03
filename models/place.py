@@ -1,10 +1,14 @@
 #!/usr/bin/python3
-""" Place Base Module """
+"""
+Place Base Module
+"""
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """ Class Amenity """
+    """
+    Class Place
+    """
     name = ""
     city_id = ""  # empty string but it will be City.id
     user_id = ""  # empty string but it will be User.id
