@@ -6,6 +6,7 @@ from models import storage
 from models.base_model import BaseModel
 import shlex
 
+
 class HBNBCommand(cmd.Cmd):
     """ Class Cmd """
     prompt = '(hbnb) '
@@ -14,19 +15,13 @@ class HBNBCommand(cmd.Cmd):
         """ Quit command to exit the program """
         return True
 
-
-
     def do_EOF(self, args):
         """ End of file reached, exit """
         return True
 
-
-
     def emptyline(self):
         """ Empty """
         pass
-
-
 
     def do_show(self, args):
         """ Prints the string representation of an instance
@@ -37,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             elif len(argv) == 1:
                 print("** instance id missing **")
-            else: 
+            else:
                 obj_key = argv[0] + '.' + argv[1]
                 if obj_key in storage.all().keys():
                     print(storage.all()[obj_key])
@@ -45,8 +40,6 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
         else:
             print("** class name missing **")
-
-
 
     def do_create(self, args):
         """ Creates a new instance of BaseModel """
@@ -61,8 +54,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-
-
     def do_destroy(self, args):
         """ Deletes an instance based on the class name and id """
         if args:
@@ -71,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             elif len(argv) == 1:
                 print("** instance id missing **")
-            else: 
+            else:
                 obj_key = argv[0] + '.' + argv[1]
                 if obj_key in storage.all().keys():
                     del storage.all()[obj_key]
@@ -80,8 +71,6 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
         else:
             print("** class name missing **")
-
-
 
     def do_update(self, args):
         """  Updates an instance based on the class name and id
@@ -125,8 +114,6 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
         else:
             print("** class name missing **")
-
-
 
     def do_all(self, args):
         """ Prints all string representation of all instances
