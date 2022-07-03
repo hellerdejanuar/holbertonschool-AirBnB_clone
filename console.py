@@ -1,14 +1,17 @@
 #!/usr/bin/python3
-""" Console """
+"""
+Console: contains the entry point of the command interpreter
+"""
 import cmd
-import json
 from models import storage
 from models.base_model import BaseModel
-import shlex
+import shlex  # split based on lexical expressions
 
 
 class HBNBCommand(cmd.Cmd):
-    """ Class Cmd """
+    """
+    Class Cmd, the imported implements quit/EOF, help, and a custom prompt
+    """
     prompt = '(hbnb) '
 
     def do_quit(self, args):
@@ -24,8 +27,12 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_show(self, args):
-        """ Prints the string representation of an instance
-        based on the class name and id """
+        """
+        Prints the string representation of an instance
+        based on the class name and id
+        Attributes:
+            obj_key: "classname.id"
+        """
         if args:
             argv = shlex.split(args)
             if argv[0] not in storage.classes():
@@ -42,7 +49,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_create(self, args):
-        """ Creates a new instance of BaseModel """
+        """
+        Creates a new instance of BaseModel
+        Attributes:
+            inst: new instance class to be created
+        """
         if args:
             if args in storage.classes():
                 inst = storage.classes()[args]()
@@ -55,7 +66,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_destroy(self, args):
-        """ Deletes an instance based on the class name and id """
+        """
+        Deletes an instance based on the class name and id
+        Attributes:
+            obj_key: "classname.id"
+        """
         if args:
             argv = shlex.split(args)
             if argv[0] not in storage.classes():
@@ -73,8 +88,15 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_update(self, args):
-        """  Updates an instance based on the class name and id
-        by adding or updating attribute """
+        """
+        Updates an instance based on the class name and id
+        by adding or updating attribute
+        Attributes:
+            obj_key: "classname.id"
+            obj: object with name obj_key
+            attr_type: type of argv[2] (str, int, float, list, datetime)
+            str_list: list of strings to be list object
+        """
         if args:
             argv = shlex.split(args)
             if len(argv) >= 2:
@@ -116,8 +138,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_all(self, args):
-        """ Prints all string representation of all instances
-        based or not on the class name """
+        """
+        Prints all string representation of all instances
+        based or not on the class name
+        Attributes:
+            obj_list: empty list that will contain all objects stored
+        """
         obj_list = []
 
         if not args:
