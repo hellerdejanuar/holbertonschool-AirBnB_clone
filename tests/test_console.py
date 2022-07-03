@@ -15,6 +15,3 @@ class TestConsole(unittest.TestCase):
     def test_quit(self):
         """test when receiving 'quit' command"""
         pass
-
-    #def test_output(self):
-    #    """
