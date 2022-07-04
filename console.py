@@ -167,27 +167,41 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, args):
         """
-        Process command before
-        Attribute:
-            input_cmd[0]: class name of args
-            input_cmd[1]: requested function
+        Process command before executing it
+        Attributes:
+            input_cmd: list containing command parsed by '.'
+                ex: "Users.show(<id>)"
+            input_cmd[0]: class name of args (Users)
+            input_cmd[1]: requested function (show(<id>))
+            fn_args: list containing input_cmd[1] parsed by '('
+            fn_args[0]: before the ()s: show
+            fn_args[1]: middle of the ()s: id
         """
         if not args:
             return cmd.Cmd.precmd(self, args)
 
         args_list = shlex.split(args)
-        if args_list[0][-2:] != '()':
-            return cmd.Cmd.precmd(self, args)
-        else:
+        if '.' in args_list[0]:
+            input_cmd = args_list[0].split('.')
+
             try:
-                input_cmd = args_list[0].split('.')
-                input_cmd[1] = input_cmd[1][:-2]
-                if input_cmd[0] in storage.classes().keys():
-                    if input_cmd[1] in self.functions():
-                        command_line = input_cmd[1] + ' ' + input_cmd[0]
-                        return cmd.Cmd.precmd(self, f'\
-                                {input_cmd[1]} {input_cmd[0]}')
-                        # handle extra arguments
+                if input_cmd[1][-1] == ')' and '(' in input_cmd[1]:
+                    if input_cmd[1][-2:] == '()':
+                        # empty args: all(),
+                        input_cmd[1] = input_cmd[1][:-2]
+
+                        if input_cmd[0] in storage.classes().keys():
+                            if input_cmd[1] in self.functions():
+                                return cmd.Cmd.precmd(self, f'\
+                                        {input_cmd[1]} {input_cmd[0]}')
+                    else:
+                        # specified args: show(<id>), fn_args = id
+                        fn_args = input_cmd[1][:-1].split('(')
+                        if input_cmd[0] in storage.classes().keys():
+                            if fn_args[0] in self.functions():
+                                return cmd.Cmd.precmd(self, f'{fn_args[0]} \
+                                            {input_cmd[0]} {fn_args[1]}')
+
             except Exception:
                 pass
 
