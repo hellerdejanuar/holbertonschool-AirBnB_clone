@@ -63,8 +63,6 @@ class FileStorage():
 # for k, v in self.__objects.items()}
         except FileNotFoundError:
             pass
-        #    with open(self.__file_path, 'r') as f:
-        #        {self.__objects.update(json.loads(dic)) for dic in f.read()}
 
     @staticmethod
     def classes():
