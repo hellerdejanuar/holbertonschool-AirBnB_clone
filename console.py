@@ -165,6 +165,48 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
 
+    def precmd(self, args):
+        """
+        Process command before
+        Attribute:
+            input_cmd[0]: class name of args
+            input_cmd[1]: requested function
+        """
+        if not args:
+            return cmd.Cmd.precmd(self, args)
+
+        args_list = shlex.split(args)
+        if args_list[0][-2:] != '()':
+            return cmd.Cmd.precmd(self, args)
+        else:
+            try:
+                input_cmd = args_list[0].split('.')
+                input_cmd[1] = input_cmd[1][:-2]
+                if input_cmd[0] in storage.classes().keys():
+                    if input_cmd[1] in self.functions():
+                        command_line = input_cmd[1] + ' ' + input_cmd[0]
+                        return cmd.Cmd.precmd(self, f'\
+                                {input_cmd[1]} {input_cmd[0]}')
+                        # handle extra arguments
+            except Exception:
+                pass
+
+        return cmd.Cmd.precmd(self, args)
+
+    @staticmethod
+    def functions():
+        """
+        Returns a dict of functions
+        """
+        func_list = [
+                'all',
+                'show',
+                'create',
+                'destroy',
+                'update'
+                ]
+        return func_list
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
